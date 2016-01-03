@@ -34,8 +34,8 @@
       "clientId",
       "clientSecret"
     ],
-    "x": 123.5625,
-    "y": 266,
+    "x": 83.5625,
+    "y": 239.00000381469727,
     "z": "828b2334.7d74e",
     "wires": [
       [
@@ -66,8 +66,8 @@
     "debugBreak": false,
     "debugOutput": false,
     "name": "ResponseBack",
-    "x": 327.56248474121094,
-    "y": 498.9999885559082,
+    "x": 432.56248474121094,
+    "y": 229.00000190734863,
     "z": "828b2334.7d74e",
     "wires": [
 
@@ -79,137 +79,20 @@
     "debugBreak": false,
     "debugOutput": false,
     "name": "process Message",
-    "func": "//The data can be found in msg.req.body:\n\ncontext.global.count=msg.payload.count;\ncontext.global.stopId=msg.payload.stopId;\n\nreturn msg;\n",
+    "func": "//The data can be found in msg.req.body:\n\ncontext.global.count=msg.payload.count;\ncontext.global.stopId=msg.payload.stopId;\nmsg.payload=\"ok\";\nreturn msg;\n",
     "outputs": 1,
     "valid": true,
     "dependencies": [
 
     ],
-    "x": 176.5625,
-    "y": 389,
+    "x": 150.5625,
+    "y": 357.99998664855957,
     "z": "828b2334.7d74e",
     "wires": [
       [
         "200268db.dffd98",
-        "fee2f3b7.011d1",
-        "ce9e9577.316168",
-        "dfdb02f6.2025"
+        "3975181.fc68ae8"
       ]
-    ]
-  },
-  {
-    "id": "fa1136c.f05eec8",
-    "type": "http curl",
-    "debugBreak": false,
-    "debugOutput": false,
-    "name": "",
-    "method": "POST",
-    "url": "http://159.203.212.140:3000/v1/ericsson/route",
-    "ret": "txt",
-    "configKey": "",
-    "useAuth": false,
-    "username": "",
-    "password": "",
-    "encryption": "0",
-    "useCertificate": false,
-    "cert": "",
-    "key": "",
-    "verbose": false,
-    "x": 806.5625,
-    "y": 300,
-    "z": "828b2334.7d74e",
-    "wires": [
-      [
-        "5568f103.aa971",
-        "4d252ad6.b2dad4"
-      ]
-    ],
-    "encryptObj": [
-      "username",
-      "password"
-    ]
-  },
-  {
-    "id": "fee2f3b7.011d1",
-    "type": "function",
-    "debugBreak": false,
-    "debugOutput": false,
-    "name": "CurlPayload",
-    "func": "msg.payload={\n    \"stopId\": context.global.stopId,\n    \"count\": context.global.count\n};\nmsg.headers={'Accept': 'application/json'};\nreturn msg;",
-    "outputs": 1,
-    "valid": true,
-    "dependencies": [
-
-    ],
-    "x": 588.5625,
-    "y": 345,
-    "z": "828b2334.7d74e",
-    "wires": [
-      [
-        "fa1136c.f05eec8",
-        "22f750c5.dd08b"
-      ]
-    ]
-  },
-  {
-    "id": "5568f103.aa971",
-    "type": "http response",
-    "debugBreak": false,
-    "debugOutput": false,
-    "name": "",
-    "x": 896.5625,
-    "y": 105,
-    "z": "828b2334.7d74e",
-    "wires": [
-
-    ]
-  },
-  {
-    "id": "ce9e9577.316168",
-    "type": "debug",
-    "debugBreak": false,
-    "debugOutput": false,
-    "name": "ResponseMessageForBusstop",
-    "active": true,
-    "console": "true",
-    "complete": "payload.count",
-    "x": 430.5625,
-    "y": 187,
-    "z": "828b2334.7d74e",
-    "wires": [
-
-    ]
-  },
-  {
-    "id": "22f750c5.dd08b",
-    "type": "debug",
-    "debugBreak": false,
-    "debugOutput": false,
-    "name": "curlRequestMessage",
-    "active": true,
-    "console": "true",
-    "complete": "payload",
-    "x": 786.5625,
-    "y": 398,
-    "z": "828b2334.7d74e",
-    "wires": [
-
-    ]
-  },
-  {
-    "id": "4d252ad6.b2dad4",
-    "type": "debug",
-    "debugBreak": false,
-    "debugOutput": false,
-    "name": "Curl PayLoad",
-    "active": true,
-    "console": "true",
-    "complete": "true",
-    "x": 1058.5625,
-    "y": 318,
-    "z": "828b2334.7d74e",
-    "wires": [
-
     ]
   },
   {
@@ -234,12 +117,12 @@
     "debugBreak": false,
     "debugOutput": false,
     "name": "prepareM2XMessage",
-    "func": "var timeStamp = new Date();\n\nmsg.topic = \"devices\";\nmsg.action = \"postMultiple\";\nmsg.topic_id = \"provideme\";\nvar streamName=\"busstop\"+context.global.stopId;\n\nmsg.payload =  {\n  \"busstop1636\" : [\n    { \"timestamp\": timeStamp, \"value\": context.global.count  }]\n};\n\n\n\n/*\nmsg.payload = {};\n//send josn comand order to insert to m2x storage \nmsg.topic = \"devices\";\nmsg.topic_id = \"7a001bf6320fd698e3f9474f79218c7a\";\nmsg.sub_topic_id =\"busstop1666\";\nvar dateObject =new Date();\nmsg.postMultiple = {};\nmsg.payload =  { \"values\": { \"busstop1666\": [ { \"timestamp\":dateObject.toISOString()+\"\" , \"value\": \"23\" } ] } } \n*/\nreturn msg;\n//msg.\n/*\nvar msg={};\nvar date = new Date();\ndate = date.toISOString();\n\n//Prepare 'postMultiple' command. use the temperature, humidity and date.\nmsg.topic= \"postMultiple\"; \nmsg.payload = {\"busstop\": {\n  \"count\": [\n    { \"at\": date, \"value\": 1 }],\n  \"stopId\": [\n    { \"at\": date, \"value\": 1234 }]\n  }\n};\n\nreturn msg;\n*/",
+    "func": "var timeStamp = new Date();\nmsg={};\nmsg.topic = \"devices\";\nmsg.action = \"postMultiple\";\nmsg.topic_id = \"deviceid\";\nvar streamName = 'stop' + stopId;\n\nvar streamName=\"busstop\"+context.global.stopId;\nmsg.payload={};\nmsg.payload[streamName]= [{ \"timestamp\": timeStamp, \"value\": context.global.count}];\n/*\nmsg.payload =  {\n  streamName : [\n    { \"timestamp\": timeStamp, \"value\": context.global.count}]\n};\n*/\n\n\n/*\nmsg.payload = {};\n//send josn comand order to insert to m2x storage \nmsg.topic = \"devices\";\nmsg.topic_id = \"7a001bf6320fd698e3f9474f79218c7a\";\nmsg.sub_topic_id =\"busstop1666\";\nvar dateObject =new Date();\nmsg.postMultiple = {};\nmsg.payload =  { \"values\": { \"busstop1666\": [ { \"timestamp\":dateObject.toISOString()+\"\" , \"value\": \"23\" } ] } } \n*/\nreturn msg;\n//msg.\n/*\nvar msg={};\nvar date = new Date();\ndate = date.toISOString();\n\n//Prepare 'postMultiple' command. use the temperature, humidity and date.\nmsg.topic= \"postMultiple\"; \nmsg.payload = {\"busstop\": {\n  \"count\": [\n    { \"at\": date, \"value\": 1 }],\n  \"stopId\": [\n    { \"at\": date, \"value\": 1234 }]\n  }\n};\n\nreturn msg;\n*/",
     "outputs": 1,
     "valid": true,
     "dependencies": "changed",
-    "x": 351.56248474121094,
-    "y": 317.9999885559082,
+    "x": 492.56248474121094,
+    "y": 340,
     "z": "828b2334.7d74e",
     "wires": [
       [
@@ -261,6 +144,54 @@
     "z": "828b2334.7d74e",
     "wires": [
 
+    ]
+  },
+  {
+    "id": "65bf9f55.9a406",
+    "type": "http curl",
+    "name": "",
+    "method": "PUT",
+    "url": "",
+    "ret": "txt",
+    "configKey": "",
+    "useAuth": false,
+    "username": "",
+    "password": "",
+    "encryption": "0",
+    "useCertificate": false,
+    "cert": "",
+    "key": "",
+    "verbose": false,
+    "x": 247.01136779785156,
+    "y": 490.2840881347656,
+    "z": "828b2334.7d74e",
+    "wires": [
+      [
+        "dfdb02f6.2025"
+      ]
+    ],
+    "encryptObj": [
+      "username",
+      "password"
+    ]
+  },
+  {
+    "id": "3975181.fc68ae8",
+    "type": "function",
+    "name": "",
+    "func": "msg={};\nmsg.url=\"http://api-m2x.att.com/v2/devices/deviceid/streams/busstop\"+context.global.stopId;\nmsg.headers={\"X-M2X-KEY\": \"masterkey\"}\n\nreturn msg;",
+    "outputs": 1,
+    "valid": true,
+    "dependencies": [
+
+    ],
+    "x": 109.01136779785156,
+    "y": 439.2840867003135,
+    "z": "828b2334.7d74e",
+    "wires": [
+      [
+        "65bf9f55.9a406"
+      ]
     ]
   }
 ]
