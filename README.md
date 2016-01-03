@@ -1,21 +1,19 @@
-\<My Project Name\>
+\<PorkChopper Flow App\>
 ====================
 
 In a nutshell
 -----------------
-\<Provide an abstract of what this flow does\>
+\<Demonstrate collecting Data matrix for busstop and posting data in M2X>
 
 Prerequisites
 -------------
-\<Specify conditions that must exist before running this flow\>
+\<M2X service and stream 1633 needs to be configured\>
 
 Flow description
 -----------------
-\<Provide a general overview of this flow\>
+\<Accepting Incoming http and post data to M2x\>
 
-Additional information
-----------------------
-\<Add any information you feel is relevant for this flow\>
+
 
 
 
